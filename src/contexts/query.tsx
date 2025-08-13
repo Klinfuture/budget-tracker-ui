@@ -12,7 +12,6 @@ export default function TenstackQueryProvider(
   props: TenstackQueryProviderProps
 ) {
   const [client] = React.useState(() => getQueryClient());
-
   return (
     <QueryClientProvider client={client}>{props.children}</QueryClientProvider>
   );
