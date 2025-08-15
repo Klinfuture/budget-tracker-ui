@@ -4,7 +4,7 @@ import FormContainer from "./form/container";
 
 export default function EditExpense() {
   return (
-    <div className="p-4">
+    <div className="w-full max-w-xl">
       <FormContainer
         title="Edit Existing Expense"
         description="Update the details of your expense below."
