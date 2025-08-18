@@ -1,9 +1,7 @@
-export interface Expense {
+export interface ExpenseCategory {
     id: string;
-    name: string;
-    amount: number;
+    name: number;
     description?: string;
-    category?: number;
     created_at: string;
     updated_at: string;
 }       

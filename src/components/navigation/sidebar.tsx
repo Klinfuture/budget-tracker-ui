@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, Wallet, FolderTree, Target, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -15,27 +15,27 @@ import {
 const items = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
     title: "Expenses",
-    url: "#",
-    icon: Inbox,
+    url: "/expenses",
+    icon: Wallet,
   },
   {
     title: "Categories",
-    url: "#",
-    icon: Calendar,
+    url: "/expense-categories",
+    icon: FolderTree,
   },
   {
     title: "Goals",
-    url: "#",
-    icon: Search,
+    url: "/goals",
+    icon: Target,
   },
   {
     title: "Settings",
-    url: "#",
+    url: "/settings",
     icon: Settings,
   },
 ];
@@ -45,7 +45,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Budget Tracker</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

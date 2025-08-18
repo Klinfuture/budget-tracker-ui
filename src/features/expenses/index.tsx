@@ -1,15 +1,25 @@
+import { getQueryClient } from "@/lib/query-client";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import CreateExpense from "./components/create";
 import EditExpense from "./components/edit";
-import ExpensesDataTable from "./components/table";
+import { ExpenseDataTable } from "./components/table";
+import { expenseOptions } from "./components/table/expenses";
+import Feature from "@/components/feature";
 
-export default function Expenses() {
+export default async function FeatureExpenses() {
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery(expenseOptions);
   return (
-    <div className="space-y-4">
-      <div className="w-full flex flex-row justify-items-start gap-4 flex-wrap">
+    <Feature>
+      <div className="w-full flex flex-row justify-items-start gap-4 flex-wrap md:flex-nowrap">
         <CreateExpense />
         <EditExpense />
       </div>
-      <ExpensesDataTable />
-    </div>
+      <div className="w-full">
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <ExpenseDataTable />
+        </HydrationBoundary>
+      </div>
+    </Feature>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Expesnse } from "../../interface";
+import { Expense } from "../../interface";
 
-export const columns: ColumnDef<Expesnse>[] = [
+export const columns: ColumnDef<Expense>[] = [
   {
     accessorKey: "id",
     header: "ID",

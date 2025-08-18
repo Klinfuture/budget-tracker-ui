@@ -10,55 +10,57 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  createExpense,
-  getExpenseById,
-  updateExpense,
-} from "@/lib/api/expense";
+import { Textarea } from "@/components/ui/textarea";
+import { getExpenseById } from "@/lib/api/expense";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import {
-  createExpenseFormValidationSchema,
-  CreateExpenseFormValues,
+  createExpenseCategoryFormValidationSchema,
+  CreateExpenseCategoryFormValues,
 } from "./validation";
-import { Textarea } from "@/components/ui/textarea";
+import {
+  createExpenseCategory,
+  updateExpenseCategory,
+} from "@/lib/api/expense-categories";
 
-interface ExpenseFormProps {
+interface ExpenseCategoryFormProps {
   expenseId?: number;
 }
 
-export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
+export default function ExpenseCategoryForm({
+  expenseId,
+}: ExpenseCategoryFormProps) {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ["expense", expenseId],
+    queryKey: ["expense-category", expenseId],
     queryFn: async () => await getExpenseById(expenseId!),
     enabled: !!expenseId,
   });
 
-  const form = useForm<CreateExpenseFormValues>({
+  const form = useForm<CreateExpenseCategoryFormValues>({
     defaultValues: data,
-    resolver: zodResolver(createExpenseFormValidationSchema),
+    resolver: zodResolver(createExpenseCategoryFormValidationSchema),
     disabled: isLoading,
   });
 
   const mutation = useMutation({
-    mutationFn: async (formData: CreateExpenseFormValues) => {
+    mutationFn: async (formData: CreateExpenseCategoryFormValues) => {
       if (expenseId) {
-        return await updateExpense(expenseId, formData);
+        return await updateExpenseCategory(expenseId, formData);
       } else {
-        return await createExpense(formData);
+        return await createExpenseCategory(formData);
       }
     },
     onSuccess: () => {
-      console.log("Expense saved successfully");
+      console.log("Expense category saved successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      queryClient.invalidateQueries({ queryKey: ["expense-categories"] });
     },
   });
 
-  const onSubmit = (data: CreateExpenseFormValues) => {
+  const onSubmit = (data: CreateExpenseCategoryFormValues) => {
     console.log("Form submitted with data:", data);
     mutation.mutate(data);
   };
@@ -97,45 +99,6 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
             </FormItem>
           )}
         />
-
-        <FormField
-          name="amount"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Amount</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  type="number"
-                  placeholder="Enter amount"
-                  onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* TODO: Uncomment when categories are implemented
-        <FormField
-          name="category"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  placeholder="Enter category ID"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
         <Button type="submit" className="mt-4">
           Submit
         </Button>

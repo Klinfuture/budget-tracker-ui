@@ -3,15 +3,15 @@
 import { DataTable } from "@/components/data-table";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { columns } from "../columns";
-import { expenseOptions } from "./expenses";
+import { expenseCategoriesOptions } from "./query-options";
 
-export function ExpenseDataTable() {
-  const { data, error } = useSuspenseQuery(expenseOptions);
+export function ExpenseCategoriesTable() {
+  const { data, error } = useSuspenseQuery(expenseCategoriesOptions);
 
   if (error) {
-    return <div>Error loading expenses: {error.message}</div>;
+    return <div>Error loading expense categories: {error.message}</div>;
   }
-  
+
   return (
     <div className="bg-white shadow-md rounded-lg">
       <DataTable columns={columns} data={data} />

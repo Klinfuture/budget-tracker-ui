@@ -1,6 +1,5 @@
-import React from "react";
+import FormContainer from "../../../components/form/container";
 import ExpenseForm from "./form";
-import FormContainer from "./form/container";
 
 export default function EditExpense() {
   return (
@@ -9,7 +8,7 @@ export default function EditExpense() {
         title="Edit Existing Expense"
         description="Update the details of your expense below."
       >
-        <ExpenseForm />
+        <ExpenseForm expenseId={1} />
       </FormContainer>
     </div>
   );
