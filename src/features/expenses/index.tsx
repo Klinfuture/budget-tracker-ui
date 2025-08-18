@@ -1,5 +1,6 @@
 import CreateExpense from "./components/create";
 import EditExpense from "./components/edit";
+import ExpensesDataTable from "./components/table";
 
 export default function Expenses() {
   return (
@@ -8,6 +9,7 @@ export default function Expenses() {
         <CreateExpense />
         <EditExpense />
       </div>
+      <ExpensesDataTable />
     </div>
   );
 }
