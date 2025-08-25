@@ -22,8 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modals,
 }: Readonly<{
   children: React.ReactNode;
+  modals: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -31,7 +33,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ContextsProvider>
-          <AppLayout>{children}</AppLayout>
+          <AppLayout>
+            {children}
+            {modals}
+          </AppLayout>
         </ContextsProvider>
       </body>
     </html>
