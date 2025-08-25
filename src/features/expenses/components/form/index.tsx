@@ -10,11 +10,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   createExpense,
   getExpenseById,
   updateExpense,
-} from "@/lib/api/expense";
+} from "@/features/expenses/api/expense";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -22,7 +23,6 @@ import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
-import { Textarea } from "@/components/ui/textarea";
 
 interface ExpenseFormProps {
   expenseId?: number;

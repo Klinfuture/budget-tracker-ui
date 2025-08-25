@@ -7,6 +7,7 @@ import { expenseCategoriesOptions } from "./query-options";
 
 export function ExpenseCategoriesTable() {
   const { data, error } = useSuspenseQuery(expenseCategoriesOptions);
+  const tableData = data.data ?? [];
 
   if (error) {
     return <div>Error loading expense categories: {error.message}</div>;
@@ -14,7 +15,7 @@ export function ExpenseCategoriesTable() {
 
   return (
     <div className="bg-white shadow-md rounded-lg">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={tableData} />
     </div>
   );
 }

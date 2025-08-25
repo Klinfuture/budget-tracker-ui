@@ -1,7 +1,7 @@
-import { getExpenses } from "@/lib/api/expense";
+import { getExpenseCategories } from "@/features/expenses-categories/api/expense-categories";
 import { queryOptions } from "@tanstack/react-query";
 
 export const expenseCategoriesOptions = queryOptions({
     queryKey: ["expense-categories"],
-    queryFn: getExpenses,
+    queryFn: getExpenseCategories,
 });

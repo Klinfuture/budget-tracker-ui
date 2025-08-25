@@ -1,7 +1,8 @@
 export interface ExpenseCategory {
-    id: string;
-    name: number;
-    description?: string;
-    created_at: string;
-    updated_at: string;
-}       
+    id: number;
+    name: string;
+    description: string;
+    CreatedAt?: string; // ISO date string
+    UpdatedAt?: string;
+    DeletedAt?: string | null;
+}

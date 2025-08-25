@@ -11,7 +11,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { getExpenseById } from "@/lib/api/expense";
+import {
+  createExpenseCategory,
+  updateExpenseCategory,
+} from "@/features/expenses-categories/api/expense-categories";
+import { getExpenseById } from "@/features/expenses/api/expense";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -19,10 +23,6 @@ import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
-import {
-  createExpenseCategory,
-  updateExpenseCategory,
-} from "@/lib/api/expense-categories";
 
 interface ExpenseCategoryFormProps {
   expenseId?: number;

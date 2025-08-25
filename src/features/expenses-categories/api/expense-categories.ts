@@ -1,13 +1,15 @@
 import { CreateExpenseCategoryFormValues } from "@/features/expenses-categories/components/form/validation";
+import { ExpenseCategory } from "@/features/expenses-categories/interface";
+import { NormalResponse, PaginatedResponse } from "@/interface/response";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
-export const getExpenseCategories = async () => {
+export const getExpenseCategories = async (): Promise<PaginatedResponse<ExpenseCategory>> => {
     const response = await fetch(baseURL + "/expense-categories");
     return response.json();
 }
 
-export const getExpenseCategoryById = async (id: number) => {
+export const getExpenseCategoryById = async (id: number): Promise<NormalResponse<ExpenseCategory>> => {
     const response = await fetch(`${baseURL}/expense-categories/${id}`);
     return response.json();
 }

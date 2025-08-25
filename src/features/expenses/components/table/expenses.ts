@@ -1,4 +1,4 @@
-import { getExpenses } from "@/lib/api/expense";
+import { getExpenses } from "@/features/expenses/api/expense";
 import { queryOptions } from "@tanstack/react-query";
 
 export const expenseOptions = queryOptions({
