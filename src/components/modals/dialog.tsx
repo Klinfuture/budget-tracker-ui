@@ -22,7 +22,7 @@ export function CustomModal({ children }: { children: React.ReactNode }) {
           "w-screen max-h-full md:max-w-lg md:max-h-[80vh] overflow-hidden"
         }
       >
-        <div className={`w-full max-h-[80vh] overflow-y-auto`}>{children}</div>
+        <div className={`w-full max-h-[80vh] overflow-y-auto pt-4`}>{children}</div>
       </DialogContent>
     </Dialog>
   );
