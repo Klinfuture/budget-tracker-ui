@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -22,7 +18,9 @@ export function CustomModal({ children }: { children: React.ReactNode }) {
           "w-screen max-h-full md:max-w-lg md:max-h-[80vh] overflow-hidden"
         }
       >
-        <div className={`w-full max-h-[80vh] overflow-y-auto pt-4`}>{children}</div>
+        <div className={`w-full max-h-[80vh] overflow-y-auto pt-4`}>
+          {children}
+        </div>
       </DialogContent>
     </Dialog>
   );

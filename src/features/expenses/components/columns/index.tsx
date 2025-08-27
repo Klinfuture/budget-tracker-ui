@@ -1,13 +1,13 @@
 "use client";
 
+import {
+  getCommonColumnActions,
+  getCommonColumns,
+} from "@/features/expenses-categories/components/columns/actions";
 import { ColumnDef } from "@tanstack/react-table";
 import { Expense } from "../../interface";
 
 export const columns: ColumnDef<Expense>[] = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
   {
     accessorKey: "description",
     header: "Description",
@@ -17,11 +17,14 @@ export const columns: ColumnDef<Expense>[] = [
     header: "Amount",
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "category.name",
+    header: "Category",
   },
-  {
-    accessorKey: "categoryId",
-    header: "Category ID",
-  },
+  ...getCommonColumns<Expense>(),
+  ...getCommonColumnActions<Expense>({
+    actionHref: {
+      delete: "/expenses/delete",
+      edit: "/expenses/edit",
+    },
+  }),
 ];

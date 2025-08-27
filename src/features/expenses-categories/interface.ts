@@ -1,5 +1,5 @@
 export interface ExpenseCategory {
-    id: number;
+    id: string;
     name: string;
     description: string;
     CreatedAt?: string; // ISO date string

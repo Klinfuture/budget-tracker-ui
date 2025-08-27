@@ -23,6 +23,7 @@ import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
+import { useRouter } from "next/navigation";
 
 interface ExpenseCategoryFormProps {
   expenseId?: number;
@@ -32,7 +33,8 @@ export default function ExpenseCategoryForm({
   expenseId,
 }: ExpenseCategoryFormProps) {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
+  
   const { data, isLoading } = useQuery({
     queryKey: ["expense-category", expenseId],
     queryFn: async () => await getExpenseById(expenseId!),
@@ -61,8 +63,8 @@ export default function ExpenseCategoryForm({
   });
 
   const onSubmit = (data: CreateExpenseCategoryFormValues) => {
-    console.log("Form submitted with data:", data);
     mutation.mutate(data);
+    router.back();
   };
 
   return (

@@ -7,14 +7,15 @@ import { expenseOptions } from "./expenses";
 
 export function ExpenseDataTable() {
   const { data, error } = useSuspenseQuery(expenseOptions);
+  const tableData = data.data ?? [];
 
   if (error) {
-    return <div>Error loading expenses: {error.message}</div>;
+    return <div>Error loading expense: {error.message}</div>;
   }
-  
+
   return (
     <div className="bg-white shadow-md rounded-lg">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={tableData} />
     </div>
   );
 }

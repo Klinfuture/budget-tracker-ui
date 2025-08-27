@@ -2,6 +2,7 @@ import Feature from "@/components/feature";
 import { Button } from "@/components/ui/button";
 import { getQueryClient } from "@/lib/query-client";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { ExpenseCategoriesTable } from "./components/table";
 import { expenseCategoriesOptions } from "./components/table/query-options";
@@ -12,9 +13,12 @@ export default async function FeatureExpenseCategories() {
 
   return (
     <Feature>
-      <div className="w-full flex flex-row justify-items-start gap-4 flex-wrap md:flex-nowrap">
+      <div className="w-full flex flex-row justify-end gap-4">
         <Link href={"/expense-categories/create"} passHref>
-          <Button>Create</Button>
+          <Button>
+            <PlusIcon />
+            Create
+          </Button>
         </Link>
       </div>
       <HydrationBoundary state={dehydrate(queryClient)}>

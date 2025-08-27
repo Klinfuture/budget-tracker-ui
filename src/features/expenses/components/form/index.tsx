@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -11,18 +12,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { expenseCategoriesOptions } from "@/features/expenses-categories/components/table/query-options";
 import {
   createExpense,
   getExpenseById,
   updateExpense,
 } from "@/features/expenses/api/expense";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@radix-ui/react-select";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
+import Link from "next/link";
 
 interface ExpenseFormProps {
   expenseId?: number;
@@ -30,6 +46,12 @@ interface ExpenseFormProps {
 
 export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const { data: categoriesResponse, isLoading: isLoadingCategories } =
+    useSuspenseQuery(expenseCategoriesOptions);
+
+  const categories = categoriesResponse.data ?? [];
 
   const { data, isLoading } = useQuery({
     queryKey: ["expense", expenseId],
@@ -59,22 +81,42 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   });
 
   const onSubmit = (data: CreateExpenseFormValues) => {
-    console.log("Form submitted with data:", data);
     mutation.mutate(data);
+    router.back();
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+       
         <FormField
-          name="name"
           control={form.control}
+          name="category_id"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter expense name" {...field} />
-              </FormControl>
+              <FormLabel>Category</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder={
+                        isLoadingCategories ? "loading.." : "Select category"
+                      }
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem value={category.id} key={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                You can manage categories{" "}
+                <Link href="/expense-categories">here</Link>.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -117,27 +159,8 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
           )}
         />
 
-        {/* TODO: Uncomment when categories are implemented
-        <FormField
-          name="category"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  placeholder="Enter category ID"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-
-        <Button type="submit" className="mt-4">
-          Submit
+        <Button type="submit" className="mt-4" disabled={isLoading}>
+          {isLoading ? "Loading" : "Submit"}
         </Button>
       </form>
     </Form>
