@@ -1,6 +1,7 @@
 "use server";
 
 import { createExpenseFormValidationSchema } from "@/features/expenses/components/form/validation";
+import { ID } from "@/interface/entity";
 // import { Expense } from "@/features/expenses/interface";
 import * as zod from "zod";
 
@@ -12,7 +13,7 @@ export const getExpenses = async () => {
     return response.json();
 }
 
-export const getExpenseById = async (id: number)=> {
+export const getExpenseById = async (id: ID)=> {
     // Fetch a single expense by ID from the API
     const response = await fetch(`${baseURL}/expenses/${id}`);
     return response.json();
@@ -34,7 +35,7 @@ export const createExpense = async (expenseData: zod.infer<typeof createExpenseF
 }
 
 
-export const updateExpense = async (id: number, expenseData: zod.infer<typeof createExpenseFormValidationSchema>) => {
+export const updateExpense = async (id: ID, expenseData: zod.infer<typeof createExpenseFormValidationSchema>) => {
     // Update an existing expense via the API
     const response = await fetch(`${baseURL}/expenses/${id}`, {
         method: "PUT",
@@ -50,7 +51,7 @@ export const updateExpense = async (id: number, expenseData: zod.infer<typeof cr
 }
 
 
-export const deleteExpense = async (id: number) => {
+export const deleteExpense = async (id: ID) => {
     // Delete an expense via the API
     const response = await fetch(`${baseURL}/expenses/${id}`, {
         method: "DELETE",

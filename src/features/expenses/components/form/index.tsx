@@ -24,24 +24,25 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@radix-ui/react-select";
+  SelectValue
+} from "@/components/ui/select";
 import {
   useMutation,
   useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
-import Link from "next/link";
+import { ID } from "@/interface/entity";
 
 interface ExpenseFormProps {
-  expenseId?: number;
+  expenseId?: ID;
 }
 
 export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
@@ -88,7 +89,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-       
+     
         <FormField
           control={form.control}
           name="category_id"

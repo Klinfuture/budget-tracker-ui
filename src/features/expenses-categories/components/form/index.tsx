@@ -13,44 +13,47 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   createExpenseCategory,
+  getExpenseCategoryById,
   updateExpenseCategory,
 } from "@/features/expenses-categories/api/expense-categories";
-import { getExpenseById } from "@/features/expenses/api/expense";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
-import { useRouter } from "next/navigation";
+import { ID } from "@/interface/entity";
+import LoadingForm from "@/components/loaders";
 
 interface ExpenseCategoryFormProps {
-  expenseId?: number;
+  id?: ID;
 }
 
-export default function ExpenseCategoryForm({
-  expenseId,
-}: ExpenseCategoryFormProps) {
+export default function ExpenseCategoryForm({ id }: ExpenseCategoryFormProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  
+
   const { data, isLoading } = useQuery({
-    queryKey: ["expense-category", expenseId],
-    queryFn: async () => await getExpenseById(expenseId!),
-    enabled: !!expenseId,
+    queryKey: ["expense-category", id],
+    queryFn: async () => await getExpenseCategoryById(id!),
+    enabled: !!id,
   });
 
   const form = useForm<CreateExpenseCategoryFormValues>({
-    defaultValues: data,
+    values: {
+      name: data?.data.name || "",
+      description: data?.data.description || "",
+    },
     resolver: zodResolver(createExpenseCategoryFormValidationSchema),
     disabled: isLoading,
   });
 
   const mutation = useMutation({
     mutationFn: async (formData: CreateExpenseCategoryFormValues) => {
-      if (expenseId) {
-        return await updateExpenseCategory(expenseId, formData);
+      if (id) {
+        return await updateExpenseCategory(id, formData);
       } else {
         return await createExpenseCategory(formData);
       }
@@ -67,6 +70,10 @@ export default function ExpenseCategoryForm({
     router.back();
   };
 
+  if (isLoading) {
+    return <LoadingForm />;
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -77,7 +84,7 @@ export default function ExpenseCategoryForm({
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter expense name" {...field} />
+                <Input placeholder="Enter category name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -94,7 +101,7 @@ export default function ExpenseCategoryForm({
                 <Textarea
                   rows={3}
                   {...field}
-                  placeholder="Enter expense description"
+                  placeholder="Enter category description"
                 />
               </FormControl>
               <FormMessage />
@@ -102,7 +109,7 @@ export default function ExpenseCategoryForm({
           )}
         />
         <Button type="submit" className="mt-4">
-          Submit
+          {mutation.isPending ? "Loading..." : id ? "Update" : "Create"}
         </Button>
       </form>
     </Form>

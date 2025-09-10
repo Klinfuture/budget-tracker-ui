@@ -56,18 +56,13 @@ export const getCommonColumnActions = <T,>(
 
 export const getCommonColumns = <T,>(): ColumnDef<T>[] => [
   {
-    accessorKey: "description",
-    header: "Description",
-    cell: ({ row }) => row.getValue("description") || "n/a",
-  },
-  {
-    accessorKey: "CreatedAt",
+    accessorKey: "created_at",
     header: "Created",
-    cell: ({ row }) => formatDate(row.getValue("CreatedAt")),
+    cell: ({ row }) => formatDate(row.getValue("created_at")),
   },
   {
-    accessorKey: "UpdatedAt",
+    accessorKey: "updated_at",
     header: "Updated",
-    cell: ({ row }) => formatDate(row.getValue("UpdatedAt")),
+    cell: ({ row }) => formatDate(row.getValue("updated_at")),
   },
 ];

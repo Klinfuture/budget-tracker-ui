@@ -1,9 +1,8 @@
-export interface Expense {
-    id: string;
+import { CommonFields } from "@/interface/entity";
+
+export interface Expense extends CommonFields {
     name: string;
     amount: number;
     description?: string;
     category?: number;
-    created_at: string;
-    updated_at: string;
 }       

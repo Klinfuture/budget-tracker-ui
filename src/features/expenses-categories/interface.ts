@@ -1,8 +1,6 @@
-export interface ExpenseCategory {
-    id: string;
+import { CommonFields } from "@/interface/entity";
+
+export interface ExpenseCategory extends CommonFields {
     name: string;
     description: string;
-    CreatedAt?: string; // ISO date string
-    UpdatedAt?: string;
-    DeletedAt?: string | null;
 }

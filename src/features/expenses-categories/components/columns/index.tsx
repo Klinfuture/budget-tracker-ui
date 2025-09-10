@@ -9,6 +9,11 @@ export const columns: ColumnDef<ExpenseCategory>[] = [
     accessorKey: "name",
     header: "Name",
   },
+  {
+    accessorKey: "description",
+    header: "Description",
+    cell: ({ row }) => row.getValue("description") || "n/a",
+  },
   ...getCommonColumns<ExpenseCategory>(),
   ...getCommonColumnActions<ExpenseCategory>({
     actionHref: {

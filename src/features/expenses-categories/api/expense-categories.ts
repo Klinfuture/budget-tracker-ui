@@ -1,6 +1,7 @@
 import { baseURL } from "@/constants/url";
 import { CreateExpenseCategoryFormValues } from "@/features/expenses-categories/components/form/validation";
 import { ExpenseCategory } from "@/features/expenses-categories/interface";
+import { ID } from "@/interface/entity";
 import { NormalResponse, PaginatedResponse } from "@/interface/response";
 
 export const getExpenseCategories = async (): Promise<PaginatedResponse<ExpenseCategory>> => {
@@ -9,8 +10,8 @@ export const getExpenseCategories = async (): Promise<PaginatedResponse<ExpenseC
 
 }
 
-export const getExpenseCategoryById = async (id: number): Promise<NormalResponse<ExpenseCategory>> => {
-    const response = await fetch(`${baseURL}/expense-categories/${id}`);
+export const getExpenseCategoryById = async (id: ID): Promise<NormalResponse<ExpenseCategory>> => {
+    const response = await fetch(`${baseURL}/expense-categories/${id}`, { cache: "no-store" });
     return await response.json();
 
 }
@@ -31,7 +32,7 @@ export const createExpenseCategory = async (categoryData: CreateExpenseCategoryF
 
 }
 
-export const updateExpenseCategory = async (id: number, categoryData: CreateExpenseCategoryFormValues) => {
+export const updateExpenseCategory = async (id: ID, categoryData: CreateExpenseCategoryFormValues) => {
     const response = await fetch(`${baseURL}/expense-categories/${id}`, {
         method: "PUT",
         headers: {
@@ -47,7 +48,7 @@ export const updateExpenseCategory = async (id: number, categoryData: CreateExpe
 
 }
 
-export const deleteExpenseCategory = async (id: number) => {
+export const deleteExpenseCategory = async (id: ID) => {
     const response = await fetch(`${baseURL}/expense-categories/${id}`, {
         method: "DELETE",
     });
