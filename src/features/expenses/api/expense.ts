@@ -10,10 +10,10 @@ const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 export const getExpenses = async () => {
     // Fetch expenses from the API
     const response = await fetch(baseURL + "/expenses");
-    return response.json();
+    return await response.json();
 }
 
-export const getExpenseById = async (id: ID)=> {
+export const getExpenseById = async (id: ID) => {
     // Fetch a single expense by ID from the API
     const response = await fetch(`${baseURL}/expenses/${id}`);
     return response.json();
@@ -28,9 +28,7 @@ export const createExpense = async (expenseData: zod.infer<typeof createExpenseF
         },
         body: JSON.stringify(expenseData),
     });
-    if (!response.ok) {
-        throw new Error("Failed to create expense");
-    }
+
     return response.json();
 }
 
@@ -44,10 +42,8 @@ export const updateExpense = async (id: ID, expenseData: zod.infer<typeof create
         },
         body: JSON.stringify(expenseData),
     });
-    if (!response.ok) {
-        throw new Error("Failed to update expense");
-    }
-    return response.json();
+
+    return await response.json();
 }
 
 

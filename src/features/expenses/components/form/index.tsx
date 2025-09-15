@@ -24,7 +24,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import {
   useMutation,
@@ -40,6 +40,7 @@ import {
   CreateExpenseFormValues,
 } from "./validation";
 import { ID } from "@/interface/entity";
+import React, { useMemo } from "react";
 
 interface ExpenseFormProps {
   expenseId?: ID;
@@ -52,7 +53,10 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   const { data: categoriesResponse, isLoading: isLoadingCategories } =
     useSuspenseQuery(expenseCategoriesOptions);
 
-  const categories = categoriesResponse.data ?? [];
+  const categories = useMemo(
+    () => categoriesResponse.data ?? [],
+    [categoriesResponse]
+  );
 
   const { data, isLoading } = useQuery({
     queryKey: ["expense", expenseId],
@@ -61,12 +65,17 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   });
 
   const form = useForm<CreateExpenseFormValues>({
-    defaultValues: data,
+    values: data,
     resolver: zodResolver(createExpenseFormValidationSchema),
     disabled: isLoading,
   });
 
+  const [formSubmissionError, setFormSubmissionError] = React.useState<
+    string | null
+  >(null);
+
   const mutation = useMutation({
+    mutationKey: expenseId ? ["update-expense", expenseId] : ["create-expense"],
     mutationFn: async (formData: CreateExpenseFormValues) => {
       if (expenseId) {
         return await updateExpense(expenseId, formData);
@@ -78,25 +87,37 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
       console.log("Expense saved successfully");
       form.reset();
       queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      router.back();
+    },
+    onError: (error) => {
+      console.error("Error saving expense:", error);
+      setFormSubmissionError(
+        error.message || "An unexpected error occurred. Please try again."
+      );
     },
   });
 
   const onSubmit = (data: CreateExpenseFormValues) => {
     mutation.mutate(data);
-    router.back();
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-     
+        {formSubmissionError && (
+          <div className="text-red-600">{formSubmissionError}</div>
+        )}
         <FormField
           control={form.control}
           name="category_id"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Category</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value?.toString()}
+                value={field.value?.toString()}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue
@@ -108,7 +129,10 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                 </FormControl>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem value={category.id as string} key={category.id}>
+                    <SelectItem
+                      value={category.id.toString()}
+                      key={category.id.toString()}
+                    >
                       {category.name}
                     </SelectItem>
                   ))}

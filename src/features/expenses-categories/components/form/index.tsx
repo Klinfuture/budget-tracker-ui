@@ -52,6 +52,9 @@ export default function ExpenseCategoryForm({ id }: ExpenseCategoryFormProps) {
   });
 
   const mutation = useMutation({
+    mutationKey: id
+      ? ["update-expense-category", id]
+      : ["create-expense-category"],
     mutationFn: async (formData: CreateExpenseCategoryFormValues) => {
       if (id) {
         return await updateExpenseCategory(id, formData);
