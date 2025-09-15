@@ -5,8 +5,12 @@ import { ID } from "@/interface/entity";
 import { NormalResponse, PaginatedResponse } from "@/interface/response";
 
 export const getExpenseCategories = async (): Promise<PaginatedResponse<ExpenseCategory>> => {
+    try {
     const response = await fetch(baseURL + "/expense-categories");
-    return await response.json();
+        return await response.json();
+    } catch (error) {
+        throw new Error("Failed to fetch expense categories", { cause: error });
+    }
 
 }
 
@@ -56,6 +60,12 @@ export const deleteExpenseCategory = async (id: ID) => {
     if (!response.ok) {
         throw new Error("Failed to delete expense category");
     }
+    
+    // Some APIs return 204 (no content) on DELETE
+    if (response.status === 204) {
+        return { success: true };
+    }
+
     return await response.json();
 
 }

@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ExpenseCategory } from "../../interface";
-import { getCommonColumnActions, getCommonColumns } from "./actions";
+import { getCommonColumns } from "./actions";
 
 export const columns: ColumnDef<ExpenseCategory>[] = [
   {
@@ -15,10 +15,4 @@ export const columns: ColumnDef<ExpenseCategory>[] = [
     cell: ({ row }) => row.getValue("description") || "n/a",
   },
   ...getCommonColumns<ExpenseCategory>(),
-  ...getCommonColumnActions<ExpenseCategory>({
-    actionHref: {
-      delete: "/expense-categories/delete",
-      edit: "/expense-categories/edit",
-    },
-  }),
 ];

@@ -108,7 +108,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                 </FormControl>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem value={category.id} key={category.id}>
+                    <SelectItem value={category.id as string} key={category.id}>
                       {category.name}
                     </SelectItem>
                   ))}

@@ -6,7 +6,7 @@ import { columns } from "../columns";
 import { expenseOptions } from "./expenses";
 
 export function ExpenseDataTable() {
-  const { data, error } = useSuspenseQuery(expenseOptions);
+  const { data, error, isFetching } = useSuspenseQuery(expenseOptions);
   const tableData = data.data ?? [];
 
   if (error) {
@@ -15,7 +15,7 @@ export function ExpenseDataTable() {
 
   return (
     <div className="bg-white shadow-md rounded-lg">
-      <DataTable columns={columns} data={tableData} />
+      <DataTable columns={columns} data={tableData} isLoading={isFetching} />
     </div>
   );
 }

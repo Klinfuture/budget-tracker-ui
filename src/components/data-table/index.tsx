@@ -1,29 +1,47 @@
 "use client";
 
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isLoading?: boolean;
+  loadingRowCount?: number;
+}
+
+// Skeleton row component for loading state
+function SkeletonRow({ columnCount }: { columnCount: number }) {
+  return (
+    <TableRow>
+      {Array.from({ length: columnCount }).map((_, index) => (
+        <TableCell key={index} className="h-12">
+          <Skeleton className="h-4 w-full" />
+        </TableCell>
+      ))}
+    </TableRow>
+  );
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isLoading = false,
+  loadingRowCount = columns.length || 5,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -53,7 +71,13 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {isLoading ? (
+            // Loading skeleton rows
+            Array.from({ length: loadingRowCount }).map((_, index) => (
+              <SkeletonRow key={index} columnCount={columns.length} />
+            ))
+          ) : table.getRowModel().rows?.length ? (
+            // Data rows
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
@@ -67,6 +91,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))
           ) : (
+            // Empty state
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.

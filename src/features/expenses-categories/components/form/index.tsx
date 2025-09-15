@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingForm from "@/components/loaders";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,16 +17,16 @@ import {
   getExpenseCategoryById,
   updateExpenseCategory,
 } from "@/features/expenses-categories/api/expense-categories";
+import { ID } from "@/interface/entity";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { expenseCategoriesOptions } from "../table/query-options";
 import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
-import { ID } from "@/interface/entity";
-import LoadingForm from "@/components/loaders";
 
 interface ExpenseCategoryFormProps {
   id?: ID;
@@ -61,7 +62,9 @@ export default function ExpenseCategoryForm({ id }: ExpenseCategoryFormProps) {
     onSuccess: () => {
       console.log("Expense category saved successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["expense-categories"] });
+      queryClient.invalidateQueries({
+        queryKey: expenseCategoriesOptions.queryKey,
+      });
     },
   });
 

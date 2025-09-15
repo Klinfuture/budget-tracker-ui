@@ -1,4 +1,4 @@
-import { Home, Wallet, FolderTree, Target, Settings } from "lucide-react";
+import { FolderTree, Home, Settings, Sparkles, Wallet } from "lucide-react";
 
 import {
   Sidebar,
@@ -29,9 +29,9 @@ const items = [
     icon: FolderTree,
   },
   {
-    title: "Goals",
-    url: "/goals",
-    icon: Target,
+    title: "Assistant",
+    url: "/assistant",
+    icon: Sparkles,
   },
   {
     title: "Settings",

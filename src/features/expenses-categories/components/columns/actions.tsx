@@ -1,17 +1,18 @@
 import { Button } from "@/components/ui/button";
+import { ID } from "@/interface/entity";
 import { formatDate } from "@/lib/date";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit3Icon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 
 interface GetColumneActionsArgs {
-  actionHref: {
-    edit: string;
-    delete: string;
+  actionHref?: {
+    edit?: string;
+    delete?: string;
   };
   actionFunc?: {
-    delete?: () => void;
-    edit?: () => void;
+    delete?: (id: ID) => void;
+    edit?: (id: ID) => void;
   };
 }
 
@@ -23,12 +24,12 @@ export const getCommonColumnActions = <T,>(
       accessorKey: "id",
       header: "Action",
       cell: ({ row }) => {
-        const id = row.getValue("id");
+        const id = row.getValue("id") as ID;
         return (
           <>
             <Link
-              href={`${args.actionHref.edit}/${id}`}
-              onClick={args.actionFunc?.edit}
+              href={`${args.actionHref?.edit}/${id}`}
+              onClick={() => args.actionFunc?.edit?.(id)}
               passHref
               aria-disabled={!id}
             >
@@ -37,16 +38,13 @@ export const getCommonColumnActions = <T,>(
               </Button>
             </Link>
 
-            <Link
-              href={`${args.actionHref.delete}/${id}`}
-              onClick={args.actionFunc?.delete}
-              aria-disabled={!id}
-              passHref
+            <Button
+              variant={"ghost"}
+              onClick={() => args.actionFunc?.delete?.(id)}
+              className="text-destructive"
             >
-              <Button variant={"ghost"} className="text-destructive">
-                <Trash2Icon />
-              </Button>
-            </Link>
+              <Trash2Icon />
+            </Button>
           </>
         );
       },

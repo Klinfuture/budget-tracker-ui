@@ -5,3 +5,5 @@ export const expenseCategoriesOptions = queryOptions({
     queryKey: ["expense-categories"],
     queryFn: getExpenseCategories,
 });
+
+// export const expenseMuatationOptions = mutationOptions();
