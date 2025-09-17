@@ -1,11 +1,9 @@
-"use server";
-
 import { createExpenseFormValidationSchema } from "@/features/expenses/components/form/validation";
 import { ID } from "@/interface/entity";
 // import { Expense } from "@/features/expenses/interface";
 import * as zod from "zod";
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const baseURL = "http://localhost:3001/api"; //process.env.NEXT_PUBLIC_API_URL || 
 
 export const getExpenses = async () => {
     // Fetch expenses from the API
@@ -16,7 +14,7 @@ export const getExpenses = async () => {
 export const getExpenseById = async (id: ID) => {
     // Fetch a single expense by ID from the API
     const response = await fetch(`${baseURL}/expenses/${id}`);
-    return response.json();
+    return await response.json();
 }
 
 export const createExpense = async (expenseData: zod.infer<typeof createExpenseFormValidationSchema>) => {
@@ -29,7 +27,12 @@ export const createExpense = async (expenseData: zod.infer<typeof createExpenseF
         body: JSON.stringify(expenseData),
     });
 
-    return response.json();
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create expense");
+    }
+
+    return await response.json();
 }
 
 
@@ -43,6 +46,11 @@ export const updateExpense = async (id: ID, expenseData: zod.infer<typeof create
         body: JSON.stringify(expenseData),
     });
 
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update expense");
+    }
+
     return await response.json();
 }
 
@@ -53,7 +61,8 @@ export const deleteExpense = async (id: ID) => {
         method: "DELETE",
     });
     if (!response.ok) {
-        throw new Error("Failed to delete expense");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete expense");
     }
     return response.json();
 }
