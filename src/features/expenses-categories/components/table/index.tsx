@@ -8,7 +8,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { deleteExpenseCategory } from "../../api/expense-categories";
+import { deleteExpenseCategory } from "../../api";
 import { ExpenseCategory } from "../../interface";
 import { columns } from "../columns";
 import { getCommonColumnActions } from "../columns/actions";
@@ -53,7 +53,7 @@ export function ExpenseCategoriesTable() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg">
+    <div className="bg-white rounded-lg">
       {mutation.isPending && <div>Deleting expense category...</div>}
       <DataTable
         columns={columnData}

@@ -11,14 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { expenseCategoriesOptions } from "@/features/expenses-categories/components/table/query-options";
-import {
-  createExpense,
-  getExpenseById,
-  updateExpense,
-} from "@/features/expenses/api/expense";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Select,
   SelectContent,
@@ -26,6 +18,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { expenseCategoriesOptions } from "@/features/expenses-categories/components/table/query-options";
+import {
+  createExpense,
+  getExpenseById,
+  updateExpense,
+} from "@/features/expenses/api";
+import { ID } from "@/interface/entity";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useMutation,
   useQuery,
@@ -34,13 +35,12 @@ import {
 } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
-import { ID } from "@/interface/entity";
-import React, { useMemo } from "react";
 
 interface ExpenseFormProps {
   expenseId?: ID;
@@ -65,9 +65,18 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
   });
 
   const form = useForm<CreateExpenseFormValues>({
-    values: data,
+    values: {
+      description: data?.data.description || "",
+      amount: data?.data.amount || 0,
+      category_id: data?.data.category_id || 0,
+    },
     resolver: zodResolver(createExpenseFormValidationSchema),
     disabled: isLoading,
+    defaultValues: {
+      description: "",
+      amount: 0,
+      category_id: 0,
+    },
   });
 
   const [formSubmissionError, setFormSubmissionError] = React.useState<
@@ -175,6 +184,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                 <Input
                   {...field}
                   type="number"
+                  value={field.value || ""}
                   placeholder="Enter amount"
                   onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                 />

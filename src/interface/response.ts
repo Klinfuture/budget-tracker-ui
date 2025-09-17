@@ -1,7 +1,12 @@
-export interface NormalResponse<T> {
+export interface SingleResponse<T> {
     success: boolean;
     message: string;
     data: T;
+}
+
+export interface NoContentResponse {
+    success: boolean;
+    message: string;
 }
 
 export interface PaginatedResponse<T> {
@@ -19,3 +24,5 @@ export interface ErrorResponse {
     message: string;
     error?: string;
 }
+
+export type ApiResponse<T> = SingleResponse<T> | PaginatedResponse<T> | ErrorResponse;

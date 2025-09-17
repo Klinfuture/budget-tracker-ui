@@ -16,7 +16,7 @@ import {
   createExpenseCategory,
   getExpenseCategoryById,
   updateExpenseCategory,
-} from "@/features/expenses-categories/api/expense-categories";
+} from "@/features/expenses-categories/api";
 import { ID } from "@/interface/entity";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

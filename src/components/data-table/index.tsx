@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   isLoading = false,
-  loadingRowCount = columns.length || 5,
+  loadingRowCount = columns.length || 3,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
     <div className="overflow-hidden rounded-md border">
       <Table>
         <TableHeader>
-          {table.getHeaderGroups().map((`headerGroup`) => (
+          {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (

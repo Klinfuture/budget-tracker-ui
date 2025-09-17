@@ -16,7 +16,7 @@ interface FormContainerProps {
 
 export default function FormContainer(props: FormContainerProps) {
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto shadow-none border-none">
       <CardHeader>
         <CardTitle>{props.title}</CardTitle>
         <CardDescription>{props.description}</CardDescription>
