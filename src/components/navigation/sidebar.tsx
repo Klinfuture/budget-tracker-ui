@@ -1,4 +1,4 @@
-import { FolderTree, Home, Settings, Sparkles, Wallet } from "lucide-react";
+import { Coins, FolderTree, Home, Settings, Sparkles, Wallet } from "lucide-react";
 
 import {
   Sidebar,
@@ -17,6 +17,11 @@ const items = [
     title: "Dashboard",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Revenue",
+    url: "/revenues",
+    icon: Coins,
   },
   {
     title: "Expenses",
