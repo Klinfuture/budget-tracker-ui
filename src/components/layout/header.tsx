@@ -18,7 +18,7 @@ export function AppHeader() {
   const title = parsePathename(pathename);
 
   return (
-    <div className="w-full flex flex-row gap-4 border-b border-gray-200 p-4 items-center sticky top-0 bg-white z-10">
+    <div className="w-full flex flex-row gap-4 border-b p-4 items-center bg-background sticky top-0 z-10">
       <SidebarTrigger />
       <h1 className="text-xl font-bold mb-0">{title}</h1>
     </div>

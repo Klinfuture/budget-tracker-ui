@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
+import { getCommonColumnActions } from "@/features/expenses-categories/components/columns/actions";
 import { ID } from "@/interface/entity";
 import {
   useMutation,
@@ -12,15 +13,12 @@ import { deleteRevenueSource } from "../../api";
 import { RevenueSource } from "../../interface";
 import { columns } from "../columns";
 import { revenueSourceOptions } from "./query-options";
-import { getCommonColumnActions } from "@/features/expenses-categories/components/columns/actions";
 
 export function RevenueSourcesTable() {
   const queryClient = useQueryClient();
-  const { data, error, isFetching } = useSuspenseQuery(
-    revenueSourceOptions
-  );
+  const { data, error, isFetching } = useSuspenseQuery(revenueSourceOptions);
   const tableData = data.data ?? [];
-
+ const totalCount = data.total_items ?? 0;
   const mutation = useMutation({
     mutationKey: ["delete-expense-category"],
     mutationFn: deleteRevenueSource,
@@ -36,7 +34,7 @@ export function RevenueSourcesTable() {
       ...columns,
       ...getCommonColumnActions<RevenueSource>({
         actionHref: {
-          edit: "/expense-categories/edit",
+          edit: "/revenues/edit",
         },
         actionFunc: {
           delete: (id: ID) => {
@@ -53,13 +51,14 @@ export function RevenueSourcesTable() {
   }
 
   return (
-    <div className="bg-white rounded-lg">
+    <>
       {mutation.isPending && <div>Deleting revenue source...</div>}
       <DataTable
         columns={columnData}
         data={tableData}
         isLoading={isFetching || mutation.isPending}
+        totalCount={totalCount}
       />
-    </div>
+    </>
   );
 }

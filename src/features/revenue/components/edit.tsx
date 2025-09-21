@@ -1,5 +1,5 @@
 import FormContainer from "@/components/form/container";
-import ExpenseCategoryForm from "./form";
+import RevenueSourceForm from "./form";
 
 interface Props {
   params: Promise<{
@@ -7,7 +7,8 @@ interface Props {
   }>;
 }
 
-export default async function EditRevenueSource(props: Props) {
+export default async function 
+EditRevenueSource(props: Props) {
   const id = (await props.params).id;
   return (
     <div className="w-full max-w-xl">
@@ -15,7 +16,7 @@ export default async function EditRevenueSource(props: Props) {
         title="Edit Revenue Source"
         description="Update the details of your revenue source below."
       >
-        <ExpenseCategoryForm id={Number(id)} />
+        <RevenueSourceForm id={Number(id)} />
       </FormContainer>
     </div>
   );

@@ -1,3 +1,4 @@
-import EditRevenueSource from "@/app/revenues/page";
+import EditRevenueSource from "@/features/revenue/components/edit";
 
-export default EditRevenueSource ;
+
+export default EditRevenueSource;

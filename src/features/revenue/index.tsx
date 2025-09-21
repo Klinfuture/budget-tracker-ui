@@ -14,7 +14,7 @@ export default async function FeatureRevenueSources() {
   return (
     <Feature>
       <div className="w-full flex flex-row justify-end gap-4">
-        <Link href={"/expense-categories/create"} passHref>
+        <Link href={"/revenues/create"} passHref>
           <Button>
             <PlusIcon />
             Create

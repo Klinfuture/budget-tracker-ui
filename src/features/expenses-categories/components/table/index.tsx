@@ -20,7 +20,8 @@ export function ExpenseCategoriesTable() {
     expenseCategoriesOptions
   );
   const tableData = data.data ?? [];
-
+  const totalCount = data.total_items ?? 0;
+  
   const mutation = useMutation({
     mutationKey: ["delete-expense-category"],
     mutationFn: deleteExpenseCategory,
@@ -53,13 +54,14 @@ export function ExpenseCategoriesTable() {
   }
 
   return (
-    <div className="bg-white rounded-lg">
+    <>
       {mutation.isPending && <div>Deleting expense category...</div>}
       <DataTable
         columns={columnData}
         data={tableData}
         isLoading={isFetching || mutation.isPending}
+        totalCount={totalCount}
       />
-    </div>
+    </>
   );
 }

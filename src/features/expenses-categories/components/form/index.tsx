@@ -68,12 +68,12 @@ export default function ExpenseCategoryForm({ id }: ExpenseCategoryFormProps) {
       queryClient.invalidateQueries({
         queryKey: expenseCategoriesOptions.queryKey,
       });
+      router.back();
     },
   });
 
   const onSubmit = (data: CreateExpenseCategoryFormValues) => {
     mutation.mutate(data);
-    router.back();
   };
 
   if (isLoading) {

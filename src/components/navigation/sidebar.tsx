@@ -50,7 +50,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Budget Tracker</SidebarGroupLabel>
+          <SidebarGroupLabel>Budget Planner</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

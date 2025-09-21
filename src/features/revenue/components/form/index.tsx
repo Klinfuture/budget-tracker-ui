@@ -28,6 +28,7 @@ import {
   getRevenueSourceById,
   updateRevenueSource,
 } from "../../api";
+import React from "react";
 
 interface RevenueSourceFormProps {
   id?: ID;
@@ -53,6 +54,10 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
     disabled: isLoading,
   });
 
+    const [formSubmissionError, setFormSubmissionError] = React.useState<
+      string | null
+    >(null);
+
   const mutation = useMutation({
     mutationKey: id ? ["update-revenue-source", id] : ["create-revenue-source"],
     mutationFn: async (formData: CreateRevenueSourceFormValues) => {
@@ -68,12 +73,18 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
       queryClient.invalidateQueries({
         queryKey: revenueSourceOptions.queryKey,
       });
+      router.back();
+    },
+    onError: (error) => {
+      console.error("Error saving expense:", error);
+      setFormSubmissionError(
+        error.message || "An unexpected error occurred. Please try again."
+      );
     },
   });
 
   const onSubmit = (data: CreateRevenueSourceFormValues) => {
     mutation.mutate(data);
-    router.back();
   };
 
   if (isLoading) {
@@ -83,6 +94,9 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {formSubmissionError && (
+          <div className="text-red-600">{formSubmissionError}</div>
+        )}
         <FormField
           name="source"
           control={form.control}

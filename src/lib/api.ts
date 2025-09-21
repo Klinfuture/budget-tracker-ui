@@ -18,9 +18,21 @@ export const customFetch = async (url: string, options?: RequestInit) => {
     }
 
     const response = await fetch(baseURL + url, options);
+
     if (!response.ok) {
-        console.error('Fetch error:', response);
-        throw new Error("An error occurred while fetching data");
+        console.error('Fetch error:', response.status, response.statusText);
+
+        let errorMessage = "An error occurred while fetching data";
+        let errorData = null;
+
+        try {
+            errorData = await response.json();
+            errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch {
+            errorMessage = response.statusText || errorMessage;
+        }
+
+        throw new Error(errorMessage);
     }
 
     return await response.json();
