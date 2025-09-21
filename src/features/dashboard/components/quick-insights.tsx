@@ -13,7 +13,7 @@ const QuickInsights = ({
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div className="bg-emerald-500/10 backdrop-blur-md rounded-2xl p-6 border border-emerald-500/20">
         <h4 className="text-emerald-400 font-bold mb-2">Annual Projection</h4>
-        <p className="text-2xl font-bold text-white mb-2">
+        <p className="text-2xl font-bold mb-2">
           ${annualSurplus.toLocaleString()}
         </p>
         <p className="text-emerald-300 text-sm">
@@ -23,7 +23,7 @@ const QuickInsights = ({
 
       <div className="bg-blue-500/10 backdrop-blur-md rounded-2xl p-6 border border-blue-500/20">
         <h4 className="text-blue-400 font-bold mb-2">Budget Health</h4>
-        <p className="text-2xl font-bold text-white mb-2">
+        <p className="text-2xl font-bold  mb-2">
           {monthlySurplus >= 0 ? "Healthy" : "At Risk"}
         </p>
         <p className="text-blue-300 text-sm">

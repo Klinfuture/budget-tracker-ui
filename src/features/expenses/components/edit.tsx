@@ -15,7 +15,7 @@ export default async function EditExpense(props: Props) {
         title="Edit Existing Expense"
         description="Update the details of your expense below."
       >
-        <ExpenseForm expenseId={expenseId} />
+        <ExpenseForm expenseId={Number(expenseId)} />
       </FormContainer>
     </div>
   );

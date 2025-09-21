@@ -12,7 +12,6 @@ import { getConfidenceColor } from "./components/utils";
 
 const BudgetPlanningDashboard = () => {
   const [timeHorizon, setTimeHorizon] = useState("year");
-  const [editMode, setEditMode] = useState(false);
 
   // --- Mock data ---
   const revenueSources = [
@@ -90,8 +89,6 @@ const BudgetPlanningDashboard = () => {
       <DashboardHeader
         timeHorizon={timeHorizon}
         setTimeHorizon={setTimeHorizon}
-        editMode={editMode}
-        setEditMode={setEditMode}
       />
 
       {/* Key Metrics */}

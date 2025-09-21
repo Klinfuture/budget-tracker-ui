@@ -21,8 +21,8 @@ interface ProjectionChartProps {
 
 const ProjectionChart = ({ monthlyProjection }: ProjectionChartProps) => {
   return (
-    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 mb-8">
-      <div className="flex justify-between items-center mb-6">
+    <div className="bg-foreground/10 backdrop-blur-md rounded-2xl p-6 border border-foreground/20 mb-8">
+      <div className="flex flex-column md:flex-row justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-white">
           12-Month Financial Projection
         </h3>

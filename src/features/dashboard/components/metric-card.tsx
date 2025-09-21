@@ -22,7 +22,7 @@ const MetricCard = ({
   tagColor,
 }: MetricCardProps) => {
   return (
-    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+    <div className="bg-foreground/10 backdrop-blur-md rounded-2xl p-6 border border-foreground/20">
       <div className="flex items-center justify-between mb-4">
         <div className={`p-3 rounded-lg ${iconBg}`}>
           <Icon className={iconColor} size={24} />
