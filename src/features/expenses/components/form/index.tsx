@@ -75,7 +75,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
     defaultValues: {
       description: "",
       amount: 0,
-      category_id: 0,
+      category_id: 1,
     },
   });
 

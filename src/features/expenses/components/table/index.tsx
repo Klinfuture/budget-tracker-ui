@@ -1,23 +1,24 @@
 "use client";
 
+import { DataTable } from "@/components/data-table";
+import { getCommonColumnActions } from "@/features/expenses-categories/components/columns/actions";
+import { ID } from "@/interface/entity";
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { deleteExpense } from "../../api";
+import { Expense } from "../../interface";
 import { columns } from "../columns";
 import { expenseOptions } from "./expenses";
-import { DataTable } from "@/components/data-table";
-import { deleteExpense } from "../../api";
-import { useMemo } from "react";
-import { getCommonColumnActions } from "@/features/expenses-categories/components/columns/actions";
-import { Expense } from "../../interface";
-import { ID } from "@/interface/entity";
 
 export function ExpenseDataTable() {
   const queryClient = useQueryClient();
   const { data, error, isLoading } = useSuspenseQuery(expenseOptions);
   const tableData = data.data ?? [];
+  const totalCount = data.total_items ?? 0;
 
   const mutation = useMutation({
     mutationKey: ["delete-expense"],
@@ -34,7 +35,7 @@ export function ExpenseDataTable() {
       ...columns,
       ...getCommonColumnActions<Expense>({
         actionHref: {
-          edit: "/expense/edit",
+          edit: "/expenses/edit",
         },
         actionFunc: {
           delete: (id: ID) => {
@@ -51,8 +52,11 @@ export function ExpenseDataTable() {
   }
 
   return (
-    <div className="bg-white rounded-lg">
-      <DataTable columns={columnData} data={tableData} isLoading={isLoading} />
-    </div>
+    <DataTable
+      columns={columnData}
+      data={tableData}
+      isLoading={isLoading}
+      totalCount={totalCount}
+    />
   );
 }

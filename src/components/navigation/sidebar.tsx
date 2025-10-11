@@ -1,4 +1,4 @@
-import { FolderTree, Home, Settings, Sparkles, Wallet } from "lucide-react";
+import { Coins, FolderTree, Home, Settings, Sparkles, Wallet } from "lucide-react";
 
 import {
   Sidebar,
@@ -17,6 +17,11 @@ const items = [
     title: "Dashboard",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Revenue",
+    url: "/revenues",
+    icon: Coins,
   },
   {
     title: "Expenses",
@@ -45,7 +50,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Budget Tracker</SidebarGroupLabel>
+          <SidebarGroupLabel>Budget Planner</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

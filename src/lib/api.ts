@@ -1,9 +1,7 @@
 import { baseURL } from "@/constants/url";
 
 export const customFetch = async (url: string, options?: RequestInit) => {
-
     const mutationsOptions = options?.method && ['POST', 'PUT', 'DELETE'].includes(options.method.toUpperCase());
-
     if (mutationsOptions) {
         options = {
             ...options,
@@ -18,13 +16,23 @@ export const customFetch = async (url: string, options?: RequestInit) => {
             cache: 'no-store'
         }
     }
-    
+
     const response = await fetch(baseURL + url, options);
 
     if (!response.ok) {
-        const json = await response.json();
-        console.error('Fetch error:', json);
-        throw new Error(`${json.message || "Server sent an error"}`);
+        console.error('Fetch error:', response.status, response.statusText);
+
+        let errorMessage = "An error occurred while fetching data";
+        let errorData = null;
+
+        try {
+            errorData = await response.json();
+            errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch {
+            errorMessage = response.statusText || errorMessage;
+        }
+
+        throw new Error(errorMessage);
     }
 
     return await response.json();

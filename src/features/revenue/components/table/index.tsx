@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/data-table";
+import { getCommonColumnActions } from "@/features/expenses-categories/components/columns/actions";
 import { ID } from "@/interface/entity";
 import {
   useMutation,
@@ -8,26 +9,22 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { deleteExpenseCategory } from "../../api";
-import { ExpenseCategory } from "../../interface";
+import { deleteRevenueSource } from "../../api";
+import { RevenueSource } from "../../interface";
 import { columns } from "../columns";
-import { getCommonColumnActions } from "../columns/actions";
-import { expenseCategoriesOptions } from "./query-options";
+import { revenueSourceOptions } from "./query-options";
 
-export function ExpenseCategoriesTable() {
+export function RevenueSourcesTable() {
   const queryClient = useQueryClient();
-  const { data, error, isFetching } = useSuspenseQuery(
-    expenseCategoriesOptions
-  );
+  const { data, error, isFetching } = useSuspenseQuery(revenueSourceOptions);
   const tableData = data.data ?? [];
-  const totalCount = data.total_items ?? 0;
-  
+ const totalCount = data.total_items ?? 0;
   const mutation = useMutation({
     mutationKey: ["delete-expense-category"],
-    mutationFn: deleteExpenseCategory,
+    mutationFn: deleteRevenueSource,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: expenseCategoriesOptions.queryKey,
+        queryKey: revenueSourceOptions.queryKey,
       });
     },
   });
@@ -35,9 +32,9 @@ export function ExpenseCategoriesTable() {
   const columnData = useMemo(
     () => [
       ...columns,
-      ...getCommonColumnActions<ExpenseCategory>({
+      ...getCommonColumnActions<RevenueSource>({
         actionHref: {
-          edit: "/expense-categories/edit",
+          edit: "/revenues/edit",
         },
         actionFunc: {
           delete: (id: ID) => {
@@ -50,12 +47,12 @@ export function ExpenseCategoriesTable() {
   );
 
   if (error) {
-    return <div>Error loading expense categories: {error.message}</div>;
+    return <div>Error loading Revenue sources {error.message}</div>;
   }
 
   return (
     <>
-      {mutation.isPending && <div>Deleting expense category...</div>}
+      {mutation.isPending && <div>Deleting revenue source...</div>}
       <DataTable
         columns={columnData}
         data={tableData}
