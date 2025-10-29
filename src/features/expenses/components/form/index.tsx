@@ -68,7 +68,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
     values: {
       description: data?.data.description || "",
       amount: data?.data.amount || 0,
-      category_id: data?.data.category_id || 0,
+      category_id: data?.data?.category_id || "",
     },
     resolver: zodResolver(createExpenseFormValidationSchema),
     disabled: isLoading,
@@ -185,6 +185,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                   {...field}
                   type="number"
                   value={field.value || ""}
+                  min={0}
                   placeholder="Enter amount"
                   onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                 />

@@ -9,7 +9,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { deleteRevenueSource } from "../../api";
+import { deleteRevenueSource } from "../../data";
 import { RevenueSource } from "../../interface";
 import { columns } from "../columns";
 import { revenueSourceOptions } from "./query-options";
@@ -18,7 +18,7 @@ export function RevenueSourcesTable() {
   const queryClient = useQueryClient();
   const { data, error, isFetching } = useSuspenseQuery(revenueSourceOptions);
   const tableData = data.data ?? [];
- const totalCount = data.total_items ?? 0;
+  const totalCount = data.total_items ?? 0;
   const mutation = useMutation({
     mutationKey: ["delete-expense-category"],
     mutationFn: deleteRevenueSource,

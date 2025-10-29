@@ -17,18 +17,18 @@ import { ID } from "@/interface/entity";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { useForm } from "react-hook-form";
+import {
+  createRevenueSource,
+  getRevenueSourceById,
+  updateRevenueSource,
+} from "../../data";
 import { revenueSourceOptions } from "../table/query-options";
 import {
   createRevenueSourceFormValidationSchema,
   CreateRevenueSourceFormValues,
 } from "./validation";
-import {
-  createRevenueSource,
-  getRevenueSourceById,
-  updateRevenueSource,
-} from "../../api";
-import React from "react";
 
 interface RevenueSourceFormProps {
   id?: ID;
@@ -54,9 +54,9 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
     disabled: isLoading,
   });
 
-    const [formSubmissionError, setFormSubmissionError] = React.useState<
-      string | null
-    >(null);
+  const [formSubmissionError, setFormSubmissionError] = React.useState<
+    string | null
+  >(null);
 
   const mutation = useMutation({
     mutationKey: id ? ["update-revenue-source", id] : ["create-revenue-source"],
@@ -123,6 +123,7 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
                   type="number"
                   value={field.value || ""}
                   placeholder="Enter amount"
+                  min={0}
                   onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                 />
               </FormControl>

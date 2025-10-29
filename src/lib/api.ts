@@ -20,8 +20,6 @@ export const customFetch = async (url: string, options?: RequestInit) => {
     const response = await fetch(baseURL + url, options);
 
     if (!response.ok) {
-        console.error('Fetch error:', response.status, response.statusText);
-
         let errorMessage = "An error occurred while fetching data";
         let errorData = null;
 
@@ -29,7 +27,8 @@ export const customFetch = async (url: string, options?: RequestInit) => {
             errorData = await response.json();
             errorMessage = errorData.message || errorData.error || errorMessage;
         } catch {
-            errorMessage = response.statusText || errorMessage;
+            console.error(response.statusText)
+            errorMessage = errorMessage;
         }
 
         throw new Error(errorMessage);
