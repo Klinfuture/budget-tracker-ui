@@ -1,4 +1,5 @@
 import TenstackQueryProvider from "./query";
+import SidebarContextProvider from "./sidebar";
 
 interface ContextsProviderProps {
   children: React.ReactNode;
@@ -7,7 +8,8 @@ interface ContextsProviderProps {
 export default function ContextsProvider({ children }: ContextsProviderProps) {
   return (
     <TenstackQueryProvider>
-      {children}
+      
+        <SidebarContextProvider>{children}</SidebarContextProvider>
     </TenstackQueryProvider>
   );
 }

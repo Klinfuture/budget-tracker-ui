@@ -1,7 +1,8 @@
+import AppLayout from "@/components/layout";
+import ContextsProvider from "@/contexts";
+import "@/style/globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "@/style/globals.css";
-import ContextsProvider from "@/contexts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,15 +22,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modals,
 }: Readonly<{
   children: React.ReactNode;
+  modals: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ContextsProvider>{children}</ContextsProvider>
+        <ContextsProvider>
+          <AppLayout>
+            {children}
+            {modals}
+          </AppLayout>
+        </ContextsProvider>
       </body>
     </html>
   );

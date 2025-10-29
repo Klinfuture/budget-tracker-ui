@@ -1,3 +1,3 @@
-import Expenses from "@/features/expenses";
+import FeatureExpenses from "@/features/expenses";
 
-export default Expenses
+export default FeatureExpenses;
