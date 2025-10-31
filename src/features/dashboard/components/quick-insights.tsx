@@ -14,7 +14,7 @@ const QuickInsights = ({
       <div className="bg-emerald-500/10 backdrop-blur-md rounded-2xl p-6 border border-emerald-500/20">
         <h4 className="text-emerald-400 font-bold mb-2">Annual Projection</h4>
         <p className="text-2xl font-bold mb-2">
-          ${annualSurplus.toLocaleString()}
+          {annualSurplus.toLocaleString()}
         </p>
         <p className="text-emerald-300 text-sm">
           Expected annual surplus based on current plan

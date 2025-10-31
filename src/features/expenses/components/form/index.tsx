@@ -41,6 +41,9 @@ import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
+import { dashboardQueryOptions } from "@/features/dashboard";
+import { expenseOptions } from "../table/expenses";
+import { Priority } from "@/features/dashboard/components/utils";
 
 interface ExpenseFormProps {
   expenseId?: ID;
@@ -69,14 +72,10 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
       description: data?.data.description || "",
       amount: data?.data.amount || 0,
       category_id: data?.data?.category_id || "",
+      priority: Priority.IMPORTANT
     },
     resolver: zodResolver(createExpenseFormValidationSchema),
     disabled: isLoading,
-    defaultValues: {
-      description: "",
-      amount: 0,
-      category_id: 1,
-    },
   });
 
   const [formSubmissionError, setFormSubmissionError] = React.useState<
@@ -95,7 +94,8 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
     onSuccess: () => {
       console.log("Expense saved successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["expenses"] });
+      queryClient.invalidateQueries({ queryKey: expenseOptions.queryKey });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryOptions.queryKey });
       router.back();
     },
     onError: (error) => {
@@ -128,7 +128,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                 value={field.value?.toString()}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue
                       placeholder={
                         isLoadingCategories ? "loading.." : "Select category"
@@ -149,8 +149,38 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
               </Select>
               <FormDescription>
                 You can manage categories{" "}
-                <Link href="/expense-categories">here</Link>.
+                <Link href="/expense-categories" className="underline">here</Link>.
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="priority"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Priority</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value?.toString()}
+                value={field.value?.toString()}
+              >
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent>
+                  {Object.values(Priority).map((priority) => (
+                    <SelectItem key={priority} value={priority}>
+                      {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -166,7 +196,7 @@ export default function ExpenseForm({ expenseId }: ExpenseFormProps) {
                 <Textarea
                   rows={3}
                   {...field}
-                  placeholder="Enter expense description"
+                  placeholder="E.g Rent"
                 />
               </FormControl>
               <FormMessage />

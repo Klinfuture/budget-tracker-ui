@@ -35,7 +35,7 @@ const MetricCard = ({
           </span>
         )}
       </div>
-      <h3 className="text-gray-300 text-sm font-medium mb-1">{label}</h3>
+      <h3 className="text-gray-300 text-sm font-medium mb-1 capitalize">{label}</h3>
       <p className="text-2xl font-bold text-white">{value}</p>
     </div>
   );
