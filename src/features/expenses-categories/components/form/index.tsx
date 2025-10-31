@@ -27,6 +27,7 @@ import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
+import { dashboardQueryOptions } from "@/features/dashboard";
 
 interface ExpenseCategoryFormProps {
   id?: ID;
@@ -63,11 +64,9 @@ export default function ExpenseCategoryForm({ id }: ExpenseCategoryFormProps) {
       }
     },
     onSuccess: () => {
-      console.log("Expense category saved successfully");
       form.reset();
-      queryClient.invalidateQueries({
-        queryKey: expenseCategoriesOptions.queryKey,
-      });
+      queryClient.invalidateQueries({ queryKey: expenseCategoriesOptions.queryKey });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryOptions.queryKey });
       router.back();
     },
   });

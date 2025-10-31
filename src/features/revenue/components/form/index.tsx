@@ -29,6 +29,7 @@ import {
   createRevenueSourceFormValidationSchema,
   CreateRevenueSourceFormValues,
 } from "./validation";
+import { dashboardQueryOptions } from "@/features/dashboard";
 
 interface RevenueSourceFormProps {
   id?: ID;
@@ -70,9 +71,8 @@ export default function RevenueSourceForm({ id }: RevenueSourceFormProps) {
     onSuccess: () => {
       console.log("Revenue source saved successfully");
       form.reset();
-      queryClient.invalidateQueries({
-        queryKey: revenueSourceOptions.queryKey,
-      });
+      queryClient.invalidateQueries({ queryKey: revenueSourceOptions.queryKey });
+      queryClient.invalidateQueries({ queryKey: dashboardQueryOptions.queryKey });
       router.back();
     },
     onError: (error) => {

@@ -7,10 +7,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TimeHorizon } from "../dashboard";
 
 interface DashboardHeaderProps {
   timeHorizon: string;
-  setTimeHorizon: (val: string) => void;
+  setTimeHorizon: (val: string | TimeHorizon) => void;
 }
 
 const DashboardHeader = ({
@@ -29,14 +30,18 @@ const DashboardHeader = ({
           onValueChange={(value) => setTimeHorizon(value)}
           defaultValue="month"
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger
+            className="w-[180px]"
+            defaultValue={"monthly"}
+            defaultChecked
+          >
             <SelectValue placeholder="Horizon" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="month">Monthly View</SelectItem>
-            <SelectItem value="quarter">Quarterly View</SelectItem>
-            <SelectItem value="year">Annual View</SelectItem>
-            <SelectItem value="5year">5-Year Projection</SelectItem>
+            <SelectItem value="monthly">Monthly View</SelectItem>
+            <SelectItem value="quarterly">Quarterly View</SelectItem>
+            <SelectItem value="yearly">Annual View</SelectItem>
+            <SelectItem value="5-Years">5-Year Projection</SelectItem>
           </SelectContent>
         </Select>
       </div>

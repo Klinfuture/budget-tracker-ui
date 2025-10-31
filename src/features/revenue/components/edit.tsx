@@ -1,9 +1,10 @@
 import FormContainer from "@/components/form/container";
 import RevenueSourceForm from "./form";
+import { ID } from "@/interface/entity";
 
 interface Props {
   params: Promise<{
-    id: string | number;
+    id: ID;
   }>;
 }
 
@@ -16,7 +17,7 @@ EditRevenueSource(props: Props) {
         title="Edit Revenue Source"
         description="Update the details of your revenue source below."
       >
-        <RevenueSourceForm id={Number(id)} />
+        <RevenueSourceForm id={id} />
       </FormContainer>
     </div>
   );

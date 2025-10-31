@@ -19,5 +19,9 @@ export const columns: ColumnDef<Expense>[] = [
     accessorKey: "category.name",
     header: "Category",
   },
+  {
+    accessorKey: "priority",
+    header: "Priority",
+  },
   ...getCommonColumns<Expense>(),
 ];

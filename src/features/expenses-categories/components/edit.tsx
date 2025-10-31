@@ -1,9 +1,10 @@
 import FormContainer from "@/components/form/container";
 import ExpenseCategoryForm from "./form";
+import { ID } from "@/interface/entity";
 
-  interface Props {
+interface Props {
   params: Promise<{
-    id: string | number;
+    id: ID;
   }>;
 }
 

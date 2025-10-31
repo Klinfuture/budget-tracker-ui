@@ -6,6 +6,7 @@ export const createExpenseFormValidationSchema = z.object({
         .positive("Amount must be greater than zero"),
     description: z.string().optional(),
     category_id: z.custom<ID>(),
+    priority:z.string()
 });
 
 export type CreateExpenseFormValues = z.infer<typeof createExpenseFormValidationSchema>;

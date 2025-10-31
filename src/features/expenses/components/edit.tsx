@@ -1,9 +1,10 @@
+import { ID } from "@/interface/entity";
 import FormContainer from "../../../components/form/container";
 import ExpenseForm from "./form";
 
 interface Props {
   params: Promise<{
-    id: string | number;
+    id: ID;
   }>;
 }
 
@@ -15,7 +16,7 @@ export default async function EditExpense(props: Props) {
         title="Edit Existing Expense"
         description="Update the details of your expense below."
       >
-        <ExpenseForm expenseId={Number(expenseId)} />
+        <ExpenseForm expenseId={expenseId} />
       </FormContainer>
     </div>
   );
