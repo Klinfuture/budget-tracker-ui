@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ID } from "@/interface/entity";
-import { formatDate } from "@/lib/date";
+import { formatDate } from "@/utils/date";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit3Icon, Trash2Icon } from "lucide-react";
 import Link from "next/link";

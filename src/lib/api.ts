@@ -1,7 +1,9 @@
 import { baseURL } from "@/constants/url";
 
 export const customFetch = async (url: string, options?: RequestInit) => {
+    
     const mutationsOptions = options?.method && ['POST', 'PUT', 'DELETE'].includes(options.method.toUpperCase());
+    
     if (mutationsOptions) {
         options = {
             ...options,
