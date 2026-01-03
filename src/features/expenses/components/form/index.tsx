@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Priority } from "@/features/dashboard/components/utils";
+import { dashboardQueryOptions } from "@/features/dashboard/data";
 import { expenseCategoriesOptions } from "@/features/expenses-categories/components/table/query-options";
 import {
   createExpense,
@@ -37,13 +39,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { expenseOptions } from "../../api/expenses";
 import {
   createExpenseFormValidationSchema,
   CreateExpenseFormValues,
 } from "./validation";
-import { dashboardQueryOptions } from "@/features/dashboard";
-import { expenseOptions } from "../table/expenses";
-import { Priority } from "@/features/dashboard/components/utils";
 
 interface ExpenseFormProps {
   expenseId?: ID;

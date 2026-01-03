@@ -27,7 +27,8 @@ import {
   createExpenseCategoryFormValidationSchema,
   CreateExpenseCategoryFormValues,
 } from "./validation";
-import { dashboardQueryOptions } from "@/features/dashboard";
+import { dashboardQueryOptions } from "@/features/dashboard/data";
+
 
 interface ExpenseCategoryFormProps {
   id?: ID;

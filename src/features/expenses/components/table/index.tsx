@@ -10,9 +10,9 @@ import {
 } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { deleteExpense } from "../../api";
+import { expenseOptions } from "../../api/expenses";
 import { Expense } from "../../interface";
-import { columns } from "../columns";
-import { expenseOptions } from "./expenses";
+import { columns } from "./columns";
 
 export function ExpenseDataTable() {
   const queryClient = useQueryClient();

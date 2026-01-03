@@ -1,8 +1,8 @@
 
 import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request:NextResponse) {
+export async function POST(request:NextRequest) {
   try {
     const { idToken } = await request.json();
     
