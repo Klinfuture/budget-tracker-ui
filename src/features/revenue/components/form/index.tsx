@@ -29,7 +29,8 @@ import {
   createRevenueSourceFormValidationSchema,
   CreateRevenueSourceFormValues,
 } from "./validation";
-import { dashboardQueryOptions } from "@/features/dashboard";
+import { dashboardQueryOptions } from "@/features/dashboard/data";
+
 
 interface RevenueSourceFormProps {
   id?: ID;

@@ -2,10 +2,10 @@ import Feature from "@/components/feature";
 import { Button } from "@/components/ui/button";
 import { getQueryClient } from "@/lib/query-client";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import Link from "next/link";
-import { ExpenseDataTable } from "./components/table";
-import { expenseOptions } from "./components/table/expenses";
 import { PlusIcon } from "lucide-react";
+import Link from "next/link";
+import { expenseOptions } from "./api/expenses";
+import { ExpenseDataTable } from "./components/table";
 
 export default async function FeatureExpenses() {
   const queryClient = getQueryClient();

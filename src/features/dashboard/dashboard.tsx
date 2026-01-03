@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { DollarSign, Target, TrendingDown, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
-import { dashboardQueryOptions } from ".";
 import BudgetBreakdown from "./components/budget-breakdown";
 import DashboardHeader from "./components/dashboard-header";
 import BudgetDashboardLoading from "./components/dashboard-loader";
@@ -12,6 +11,7 @@ import ProjectionChart from "./components/projection-chart";
 import QuickInsights from "./components/quick-insights";
 import { Confidence, getConfidenceColor } from "./components/utils";
 import RevenueSources from "./components/revenue-sources";
+import { dashboardQueryOptions } from "./data";
 
 export enum TimeHorizon {
   MONTH = "monthly",
@@ -21,7 +21,7 @@ export enum TimeHorizon {
 }
 
 const BudgetPlanningDashboard = () => {
-  const { data, isLoading } = useQuery(dashboardQueryOptions);
+  const { data, error, isLoading } = useQuery(dashboardQueryOptions);
   const [timeHorizon, setTimeHorizon] = useState<TimeHorizon | string>(
     TimeHorizon.MONTH
   );
@@ -121,6 +121,10 @@ const BudgetPlanningDashboard = () => {
   );
 
   if (isLoading) return <BudgetDashboardLoading />;
+
+  if (error) {
+    throw new Error(error.message)
+  }
 
   return (
     <div className="min-h-screen">
