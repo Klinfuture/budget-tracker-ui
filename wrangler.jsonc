@@ -9,3 +9,6 @@
     "binding": "ASSETS"
   }
 }
+
+// "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+// "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
